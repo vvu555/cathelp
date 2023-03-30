@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments ::head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信息发布</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+
+<!----------------------------导航----------------------------->
+<nav th:replace="admin/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted stackable menu">
+            <h2 class="ui teal header item">发布与管理</h2>
+               <a href="#" class="active m-item item m-mobile-hide"><i class="bullhorn icon"></i>发布</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class="right m-item item m-mobile-hide m-mobile-hide">
+                <div class="ui dropdown item">
+                   <div class="text">用户</div>
+                   <i class="dropdown icon"></i>
+                   <div class="menu">
+                      <a href="#" class="item">注销</a>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <a href="#" class="ui menuto black icon button m-right-top m-mobile-show">
+      <i class="sidebar icon"></i>
+  </a>
+</nav>
+
+    <div th:replace="admin/_fragments :: menus(1)" class="ui attached pointing menu">
+        <a class="item">列表</a>
+        <a class="item">新增</a>
+    </div>
+
+
+<!---------------------------中间内容--------------------------->
+<div class="m-padded-tb-huge m-container-small">
+    <div class="ui container">
+<!------------------开始--------------->
+        <form enctype="multipart/form-data" id="cat-form" action="#" th:object="${cat}" th:action="@{/admin/catinfos}" method="post" class="ui form">
+            <input type="hidden" name="published">
+            <input type="hidden" name="id" th:value="*{id}">
+<!----------------名字----------------->
+            <div class="required field">
+                <div class="ui right labeled input">
+                    <input type="text" name="name" placeholder="名字" th:value="*{name}">
+                    <div class="ui selection compact dropdown label">
+                        <input type="hidden" value="未知" name="vaccineinfo" th:value="*{vaccineinfo}">
+                        <i class="dropdown icon"></i>
+                        <div class="text">未知</div>
+                        <div class="menu">
+                            <div class="item" data-value="已接种">已接种</div>
+                            <div class="item" data-value="未接种">未接种</div>
+                            <div class="item" data-value="未知">未知</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!----------------图片----------------->
+            <div class="required two field">
+            <div class="ui middle aligend two column grid">
+                <div class="column">
+                    <input type="file" name="file" accept="image/*">
+                </div>
+                <div class="ui middle aligend column">
+                    <img th:src="|/images/@{*{firstPicture}}|" style="width: 35%">
+                </div>
+            </div>
+            </div>
+<!-----------------中间内容---------------->
+            <div class="three fields">
+<!------------------ 分类------------------>
+                <div class="required field">
+                    <div class="ui left labeled action input">                   <!----下拉框和前部连接不紧密用action关键字---->
+                        <label class="ui compact label">分类</label>   <!----后期看情况删除试试---->
+                        <div class="ui search selection dropdown">            <!----1.如果要充满请加fluid关键字 2.多选关键字multiple 3.搜索关键字search（搜索是根据data-value搜索后期得改）---->
+                            <input type="hidden" name="type.id" th:value="*{type}!=null ? *{type.id}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">请选择</div>
+                            <div class="menu">
+                                <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">类型1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!------------------标签------------------>
+                    <div class="required field">
+                        <div class="ui left labeled action input">                   <!----下拉框和前部连接不紧密用action关键字---->
+                            <label class="ui compact label">标签</label>   <!----后期看情况删除试试---->
+                            <div class="ui multiple search selection dropdown">
+                                <input type="hidden" name="tagIds" th:value="*{tagIds}">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">请选择</div>
+                                <div class="menu">
+                                    <div th:each="tag : ${tags}" class="item" data-value="1" th:data-value="${tag.id}" th:text="${tag.name}">类型1</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!------------------性别------------------>
+                <div class="field">
+                    <div class="field">
+                        <div class="ui left labeled action input">                   <!----下拉框和前部连接不紧密用action关键字---->
+                            <label class="ui compact label">性别</label>   <!----后期看情况删除试试---->
+                            <div class="ui selection dropdown">
+                                <input type="hidden" name="sex" th:value="*{sex}">
+                                <i class="dropdown icon"></i>
+                                <div class="deiault text">请选择</div>
+                                <div class="menu">
+                                    <div class="item" data-value="公">公</div>
+                                    <div class="item" data-value="母">母</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!------------------年龄------------------>
+            <div class="three fields">
+                <div class="required field">
+                    <div class="ui labeled input">
+                        <label class="ui label">猫龄</label>
+                        <input type="text" name="age" placeholder="请输入" th:value="*{age}">
+                    </div>
+                </div>
+            </div>
+
+<!----------------文本输入区----------------->
+            <div id="md-content" class="required field" style="z-index: 1 !important;">
+                <textarea placeholder="请输入 . . ." name="content"  style="display:none;" th:text="*{content}"></textarea>
+            </div>
+<!------------------复选框（可选添加内容）------------------>
+            <!--<div class="inline fields">
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" id="commentabled" name="commentabled" class="hidden" th:checkbox="*{commentabled}">
+                        <label for="commentabled">是否开启评论功能</label>
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="inline fields">
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" id="adopt" name="adopt" class="hidden" th:checkbox="*{adopt}">   <!----hidden意思是默认不选中---->
+                        <label for="adopt">是否被领养</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ui right aligned container">
+                <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>    <!----返回上一层的功能实现---->
+                <button type="button" id="save-btn" class="ui button">保存</button>
+                <button type="button" id="publish-btn" class="ui submit button">提交</button>
+                <div class="ui error message"></div>
+            </div>
+        </form>
+<!----------------底部翻页----------------->
+    </div>
+</div>
+
+
+<!----------------------------底部----------------------------->
+<footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <img src="./static/images/添加的图片名称.jpg" class="ui rounded image" alt="" style="width: 100%">
+            </div>
+            <div class="three wide column">
+               <h4 class="ui inverted header m-text-spaced">工具链接</h4>
+                  <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">学校官网</a>
+                    <a href="#" class="item">知网</a>
+                    <a href="#" class="item">研招网</a>
+                  </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header m-text-spaced">联系我</h4>
+                  <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">邮箱：806426307@qq.com</a>
+                    <a href="#" class="item">QQ:806426307</a>
+                  </div>
+            </div>
+            <div class="five wide column">
+                  <h4 class="ui inverted header m-text-spaced">网站简介</h4>
+                  <p class="m-text-thin m-text-spaced m-text-lined">一个关注校园流浪猫猫虫的网站</p>
+                  </div>
+            </div>
+        <div class=" ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced">Designed by GSC</p>
+    </div>
+</footer>
+
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+<!------------------鼠标监听js------------------->
+<script>$('.menuto').click(function () {
+    $('.m-item').toggleClass('m-mobile-hide');
+});
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+    $('#save-btn').click(function () {
+        $('[name="published"]').val(false);
+        $('#cat-form').submit();
+    });
+    $('#publish-btn').click(function () {
+    $('[name="published"]').val(true);
+    $('#cat-form').submit();
+    });
+ $('.ui.checkbox').checkbox();//  复选框js
+    $('.ui.form')
+        .form({
+            on : 'blur',
+          fields : {
+              name:{
+                    indentifier : 'name',
+                    rules:[
+                        {
+                        type: 'empty',
+                        prompt : '请输入名字'
+                      }
+                    ]
+                },
+              firstPicture:{
+                  indentifier : 'firstPicture',
+                  rules:[
+                      {
+                          type: 'empty',
+                          prompt : '请插入图片'
+                      }
+                  ]
+              },
+              typeId: {
+                  identifier  : 'typeId',
+                  rules: [
+                      {
+                          type   : 'empty',
+                          prompt : '请选择类型'
+                      }
+                  ]
+              },
+              tagIds: {
+                  identifier  : 'tagIds',
+                  rules: [
+                      {
+                          type   : 'empty',
+                          prompt : '请选择标签'
+                      }
+                  ]
+              }
+        }
+    });
+
+</script>
+<!------------------在线编辑器js------------------->
+<script type="text/javascript">
+    var contentEditor;
+//初始化编辑器
+    $(function() {
+        contentEditor = editormd("md-content", {
+            width   : "100%",
+            height  : 450,
+            syncScrolling : "single",
+            path    : "/lib/editormd/lib/",
+            emoji   : "true"
+        });
+    });
+</script>
+</body>
+</html>

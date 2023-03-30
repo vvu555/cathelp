@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments ::head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>审核</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+
+<!----------------------------导航----------------------------->
+<nav th:replace="admin/_fragments :: menu(6)" class="ui inverted attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted stackable menu">
+            <h2 class="ui teal header item">发布与管理</h2>
+               <a href="#" class="active m-item item m-mobile-hide"><i class="bullhorn icon"></i>发布</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class="right m-item item m-mobile-hide m-mobile-hide">
+                <div class="ui dropdown item">
+                   <div class="text">用户</div>
+                   <i class="dropdown icon"></i>
+                   <div class="menu">
+                      <a href="#" class="item">注销</a>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <a href="#" class="ui menuto black icon button m-right-top m-mobile-show">
+      <i class="sidebar icon"></i>
+  </a>
+</nav>
+
+
+
+<!---------------------------中间内容--------------------------->
+<div class="m-padded-tb-huge m-container-small">
+    <div class="ui m-div container m-padded-tb-big m-padded-lr">
+<!------------------开始--------------->
+        <form id="adopt-form" action="#" method="post" th:action="@{/admin/adoptApply}" class="ui form" th:object="${adopt}">
+            <input type="hidden" name="applyState">
+            <input type="hidden" name="money">
+            <input type="hidden" name="id" th:value="*{id}">
+            <input type="hidden" name="cat.id" th:value="*{cat.id}">
+            <input type="hidden" name="user.id" th:value="*{user.id}">
+            <input type="hidden" name="cat.adopt">
+<!----------------名字----------------->
+            <div class="ui container">
+                <div class="ui middle aligend four column grid">
+                    <div class="column">
+                        <div class="ui disabled input">
+                            <p>姓名<input name="realName" type="text" placeholder="请输入真是姓名" th:value="*{realName}"></p>
+
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui disabled input">
+                             <p>年龄<input name="age" type="text" placeholder="请输入年龄" th:value="*{age}"></p>
+
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui disabled input">
+                            <p>身份证号<input name="cardId" type="text" placeholder="请输入身份证号" th:value="*{cardId}"></p>
+
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui disabled input">
+                            <p>电话<input name="tel" type="text" placeholder="请输入联系电话" th:value="*{tel}"></p>
+
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui disabled input">
+                            <p>邮箱<input name="email" type="text" placeholder="请输入邮箱地址" th:value="*{email}"></p>
+
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui disabled input">
+                            <p>住址<input name="address" type="text" placeholder="请输入详细住址" th:value="*{address}"></p>
+
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui disabled input">
+                            <p>联系方式<input name="connection" type="text" placeholder="请输入QQ或微信号" th:value="*{connection}"></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+
+<!----------------文本输入区----------------->
+            <label>自我介绍</label>
+            <div class="disabled field">
+                <textarea name="selfIntroduction" th:text="*{selfIntroduction}"></textarea>
+            </div>
+
+            <div class="ui right aligned container">
+                <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>    <!----返回上一层的功能实现---->
+                <button type="button" id="unPublish-btn" class="ui red submit button">不通过</button>
+                <button type="button" id="publish-btn" class="ui green submit button">通过</button>
+                <div class="ui error message"></div>
+            </div>
+        </form>
+<!----------------底部翻页----------------->
+    </div>
+    </div>
+
+
+<!----------------------------底部----------------------------->
+<footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <img src="./static/images/添加的图片名称.jpg" class="ui rounded image" alt="" style="width: 100%">
+            </div>
+            <div class="three wide column">
+               <h4 class="ui inverted header m-text-spaced">工具链接</h4>
+                  <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">学校官网</a>
+                    <a href="#" class="item">知网</a>
+                    <a href="#" class="item">研招网</a>
+                  </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header m-text-spaced">联系我</h4>
+                  <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">邮箱：806426307@qq.com</a>
+                    <a href="#" class="item">QQ:806426307</a>
+                  </div>
+            </div>
+            <div class="five wide column">
+                  <h4 class="ui inverted header m-text-spaced">网站简介</h4>
+                  <p class="m-text-thin m-text-spaced m-text-lined">一个关注校园流浪猫猫虫的网站</p>
+                  </div>
+            </div>
+        <div class=" ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced">Designed by GSC</p>
+    </div>
+</footer>
+
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+<!------------------鼠标监听js------------------->
+<script>$('.menuto').click(function () {
+    $('.m-item').toggleClass('m-mobile-hide');
+});
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+    $('.ui.form')
+        .form({
+            on : 'blur',
+          fields : {
+              name:{
+                    indentifier : 'name',
+                    rules:[
+                        {
+                        type: 'empty',
+                        prompt : '请输入名字'
+                      }
+                    ]
+                },
+              firstPicture:{
+                  indentifier : 'firstPicture',
+                  rules:[
+                      {
+                          type: 'empty',
+                          prompt : '请插入图片'
+                      }
+                  ]
+              },
+              typeId: {
+                  identifier  : 'typeId',
+                  rules: [
+                      {
+                          type   : 'empty',
+                          prompt : '请选择类型'
+                      }
+                  ]
+              },
+              tagIds: {
+                  identifier  : 'tagIds',
+                  rules: [
+                      {
+                          type   : 'empty',
+                          prompt : '请选择标签'
+                      }
+                  ]
+              }
+        }
+    });
+
+
+    $('#unPublish-btn').click(function () {
+        $('[name="cat.adopt"]').val(false);
+        $('[name="applyState"]').val(2);
+        $('[name="money"]').val(0);
+        $('#adopt-form').submit();
+    });
+    $('#publish-btn').click(function () {
+        $('[name="cat.adopt"]').val(true);
+        $('[name="applyState"]').val(1);
+        $('[name="money"]').val(2);
+        $('#adopt-form').submit();
+    });
+</script>
+<!------------------在线编辑器js------------------->
+<script type="text/javascript">
+    var contentEditor;
+//初始化编辑器
+    $(function() {
+        contentEditor = editormd("md-content", {
+            width   : "100%",
+            height  : 450,
+            syncScrolling : "single",
+            path    : "/lib/editormd/lib/",
+            emoji   : "true"
+        });
+    });
+</script>
+</body>
+</html>

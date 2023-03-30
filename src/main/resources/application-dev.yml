@@ -1,0 +1,42 @@
+# 应用名称
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:
+    username:
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: false   # 1
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect   # 1
+
+logging:
+  level:
+    root: info
+    com.gsc: debug
+  file:
+    path: log/cathelp-dev.log
+
+
+
+alipay:
+  appId:
+  ##私钥
+  privateKey:
+  ##公钥
+  publicKey:
+  #支付网关配置
+  gateway: openapi.alipaydev.com
+  #同步回调地址
+  returnUrl:
+  #异步回调地址
+  notifyUrl:
+
+
+
+
+
+
+

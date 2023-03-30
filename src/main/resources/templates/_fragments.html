@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title}">头部</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href=".static/js/scrollTo/jquery.scrollTo.min.js" th:href="@{/js/scrollTo/jquery.scrollTo.min.js}">
+</head>
+<body>
+<nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted stackable secondary menu">
+            <h2 class="ui teal header item">基于SpringBoot的校园流浪猫管理系统</h2>
+            <a href="#" th:href="@{/}" class="m-item item m-mobile-hide" th:classappend="${n==0} ? 'active'"><i class="home icon"></i>首页</a>
+            <a href="#" th:href="@{/archive}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="clock icon"></i>时间戳</a>
+            <div class="right m-item item m-mobile-hide">
+                <a href="#" th:href="@{/user}" class="m-item item m-mobile-hide"><i class="user icon"></i>用户登陆</a>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menuto black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-large">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="two wide column">
+                <img src="./static/images/school.png" th:src="@{/images/school.png}" class="m-image-footer" alt="">
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header m-text-spaced">友情链接</h4>
+                <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">校园官网</a>
+                    <a href="#" class="item">SemanticUi</a>
+                    <a href="#" class="item">MarkDown</a>
+                </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header m-text-spaced">联系我</h4>
+                <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <p class="m-text-thin m-text-spaced m-text-lined m-grey">邮箱：806426307@qq.com</p>
+                    <p class="m-text-thin m-text-spaced m-text-lined m-grey">QQ:806426307</p>
+                </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header m-text-spaced">简介</h4>
+                <p class="m-text-thin m-text-spaced m-text-lined m-grey">一款基于SpringBoot的校园流浪猫信息管理系统</p>
+            </div>
+        </div>
+        <div class=" ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced">Designed by GSC</p>
+    </div>
+</footer>
+
+<th:block th:fragment="script">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script src="../static/js/scrollTo/jquery.scrollTo.min.js" th:src="@{/js/scrollTo/jquery.scrollTo.min.js}"></script>
+</th:block>
+
+</body>
+</html>

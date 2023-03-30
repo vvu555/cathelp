@@ -1,0 +1,216 @@
+/*--自定义布局宽度--*/
+.m-padded-tb-massive{
+    padding-top: 5em !important;
+    padding-bottom: 5em !important;
+}
+
+.m-padded-tb-huge{
+    padding-top: 4em !important;
+    padding-bottom: 4em !important;
+}
+
+.m-padded-tb-big{
+    padding-top: 3em !important;
+    padding-bottom: 3em !important;
+}
+
+.m-padded-tb-large{
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+}
+
+.m-padded-tb{
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+}
+
+.m-padded-tb-small{
+    padding-top: 0.5em !important;
+    padding-bottom: 0.5em !important;
+}
+
+.m-padded-tb-tiny{
+    padding-top: 0.3em !important;
+    padding-bottom: 0.3em !important;
+}
+
+.m-padded-tb-mini{
+    padding-top: 0.2em !important;
+    padding-bottom: 0.2em !important;
+}
+
+.m-padded-tb-mini{
+    padding: 0.2em !important;
+}
+
+.m-padded{
+    padding: 1em !important;
+}
+
+.m-padded-lr{
+    padding-left: 4em !important;
+    padding-right: 4em !important;
+}
+
+.m-padded-lr-responsive { /*--文本根据屏幕尺寸自动响应--*/
+    padding-left: 4em !important;
+    padding-right: 4em !important;
+}
+
+/*--自定义字体--*/
+.m-text{
+    font-weight: 300 !important;
+    line-height: 1.8;
+    letter-spacing: 1px !important;
+}
+
+.m-text-thin{ /*-字体粗细-*/
+    font-weight: 300 !important;
+}
+
+.m-text-spaced{ /*-字间隔-*/
+    letter-spacing: 1px !important;
+}
+
+.m-text-lined{ /*-行间隔-*/
+    line-height: 1.8;
+}
+
+.m-opacity{ /*-透明度-*/
+    opacity: 0.8 !important;
+}
+
+.m-opacity-all{ /*-透明度-*/
+    opacity: 0.5 !important;
+}
+
+/*-- 定义h3标签不自动换行--*/
+.m-inline-block{
+    display: inline-block !important;
+}
+
+/*-- 定义container宽度--*/
+.m-container{
+    max-width: 72em !important;
+    margin: auto !important; /*--水瓶居中--*/
+}
+
+.m-container-small {
+    max-width: 60em !important;
+    margin: auto !important; /*--水瓶居中--*/
+}
+
+/*-- 定义上下间距--*/
+.m-magrin-tb-tiny{
+    margin-top: 0.3em !important;
+    margin-bottom: 0.3em !important;
+}
+
+/*-- 定义上间距--*/
+.m-margin-top-small{
+    margin-top: 0.5em !important;
+}
+
+.m-margin-top{
+    margin-top: 1em !important;
+}
+
+.m-margin-top-large{
+    margin-top: 2em !important;
+}
+
+.m-margin-bottom-small{
+    margin-bottom: 0.5em !important;
+}
+
+/*-- 定义颜色--*/
+.m-black{
+    color: #333 !important;
+}
+.m-grey{
+    color: #C0C0C0 !important;
+}
+.m-div{
+    background-color: white !important;
+}
+.m-front-white{
+    color: white !important;
+}
+.m-front-red{
+    color: #9c3328 !important;
+}
+.m-front-green{
+    color: #5A9600 !important;
+}
+
+
+body {
+    background: url("../images/BG.jpg");
+    background-size: 100% 100% !important;
+}
+
+/*-- 定义阴影--*/
+.m-shadow-small{
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+    -webkit-box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+}
+
+.m-blue{
+    color: #00a8c6 !important;
+}
+
+/*-- 定义位置为右上--*/
+.m-right-top{
+    position: absolute;
+    top:0;
+    right: 0;
+}
+
+/*--绝对位置--*/
+.m-fixed{
+    position: fixed !important;
+    z-index: 1 !important;
+}
+
+.m-right-bottom{
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+/*-- 定义非移动端不显示--*/
+.m-mobile-show{
+    display: none !important;
+}
+
+
+
+/*-- 定义自动适配移动端--*/
+@media screen and (max-width: 768px){
+    .m-mobile-hide{
+        display: none !important;
+    }
+    .m-mobile-show{
+        display: block !important;
+    }
+    .m-padded-lr-responsive{
+        padding-left: 0em !important;
+        padding-right: 0em !important;
+    }
+    .m-padded-lr-clear{
+        padding-left: 0em !important;
+        padding-right: 0em !important;
+    }
+    .m-mobile-wide{
+        width: 100% !important;
+    }
+}
+
+.m-image{
+    max-width:100%;
+    height:auto
+}
+
+.m-image-footer{
+    max-width:70%;
+    height:auto
+}

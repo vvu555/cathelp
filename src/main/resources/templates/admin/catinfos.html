@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments ::head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布管理</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+
+<!----------------------------导航----------------------------->
+<nav th:replace="admin/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted menu">
+            <h2 class="ui teal header item">管理</h2>
+               <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="bullhorn icon"></i>发布</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class="right m-item item m-mobile-hide m-mobile-hide">
+                <div class="ui dropdown item">
+                   <div class="text">用户</div>
+                   <i class="dropdown icon"></i>
+                   <div class="menu">
+                      <a href="#" class="item">注销</a>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <a href="#" class="ui menuto black icon button m-right-top m-mobile-show">
+      <i class="sidebar icon"></i>
+  </a>
+</nav>
+<!----------------二级导航----------------->
+    <div th:replace="admin/_fragments :: menus(0)" class="ui attached pointing menu">
+        <a class="item">列表</a>
+        <a class="item">新增</a>
+    </div>
+
+
+<!---------------------------中间内容--------------------------->
+<div class="m-padded-tb-huge m-container-small">
+    <div class="ui container">
+<!------------------搜索------------------>
+<div class="ui segment form">
+    <input type="hidden" name="page">
+    <div class="inline fields">
+        <div class="field">
+            <input type="text" name="name" placeholder="名字">
+        </div>
+        <div class="field">
+            <div class="ui selection dropdown">
+                <input type="hidden" name="typeId">
+                <i class="dropdown icon"></i>
+                <div class="default text">
+                    分类
+                </div>
+                <div class="menu">
+                    <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">类型1</div>
+                </div>
+            </div>
+        </div>
+        <!--搜索功能-->
+        <div class="field">
+            <button type="button" id="search-btn" class="ui mini blue basic button"><i class="search icon"></i>搜索</button>
+        </div>
+        <div class="field">
+            <button id="clear-btn" class="ui mini red basic button"><i class="trash alternate icon"></i>清除</button>
+        </div>
+    </div>
+</div>
+<div id="table-container">
+    <table th:fragment="catList" class="ui compact celled table">
+        <thead class="center aligned">
+        <tr><th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <th>类型</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr></thead>
+        <tbody class="center aligned">
+        <tr th:each="cat,iterStat : ${page.content}">
+            <td th:text="${cat.name}" >James</td>
+            <td th:text="${cat.age}" >24</td>
+            <td th:text="${cat.sex}" >男</td>
+            <td th:text="${cat.type.name}">2021年</td>
+            <td th:text="${cat.published}  ? '已通过':'待审核'">发布</td>
+            <td>
+                <a href="#" th:href="@{/admin/catinfos/{id}/input(id=${cat.id})}" class="ui mini basic blue button">编辑</a>
+                <a href="#" th:href="@{/admin/catinfos/{id}/delete(id=${cat.id})}" class="ui mini basic red button">删除</a>
+            </td>
+        </tr>
+        </tbody>
+        <!------------------分页内容------------------>
+        <tfoot>
+        <tr>
+            <th colspan="6">
+                <div class="ui pagination menu" th:if="${page.totalPages}>1">
+                    <a class="icon item" onclick="page(this)" th:attr="data-page=${page.number}-1" th:unless="${page.first}">上一页</i></a>
+                    <a class="icon item" onclick="page(this)" th:attr="data-page=${page.number}+1" th:unless="${page.last}">下一页</i></a>
+                </div>
+                <a href="#" th:href="@{/admin/catinfos/input}" class="ui right floated basic green basic button ">新增</a>    <!--表格中往右靠边关键字"right floated"--->
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+    <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+        <i class="close icon"></i>
+        <div class="header">Tips:</div>
+        <p th:text="${message}">成功</p>
+    </div>
+</div>
+<!------------------中间内容------------------>
+
+<!------------------底部翻页------------------>
+        <!--<div class="ui bottom attached segment">-->
+            <!--<div class="ui middle aligend two column grid">-->
+                <!--<div class="column">-->
+                    <!--<a href="#" class="ui mini button m-text">上一页</a>-->
+                <!--</div>-->
+                <!--<div class="right aligned column">-->
+                    <!--<a href="#" class="ui mini button m-text">下一页</a>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+</div>
+
+
+<!----------------------------底部----------------------------->
+<footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <img src="./static/images/添加的图片名称.jpg" class="ui rounded image" alt="" style="width: 100%">
+            </div>
+            <div class="three wide column">
+               <h4 class="ui inverted header m-text-spaced">工具链接</h4>
+                  <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">学校官网</a>
+                    <a href="#" class="item">知网</a>
+                    <a href="#" class="item">研招网</a>
+                  </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header m-text-spaced">联系我</h4>
+                  <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">邮箱：806426307@qq.com</a>
+                    <a href="#" class="item">QQ:806426307</a>
+                  </div>
+            </div>
+            <div class="five wide column">
+                  <h4 class="ui inverted header m-text-spaced">网站简介</h4>
+                  <p class="m-text-thin m-text-spaced m-text-lined">一个关注校园流浪猫猫虫的网站</p>
+                  </div>
+            </div>
+        <div class=" ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced">Designed by GSC</p>
+    </div>
+</footer>
+
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+<script>$('.menuto').click(function () {
+    $('.m-item').toggleClass('m-mobile-hide');
+});
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+$('.message .close')
+    .on('click', function () {
+        $(this)
+            .closest('.message')
+            .transition('fade');
+    });
+    function page(obj) {
+        $("[name='page']").val($(obj).data("page"));
+        loaddata()
+    }
+    $("#search-btn").click(function () {
+        $("[name='page']").val(0);
+        loaddata();
+    });
+$('#clear-btn')
+    .on('click', function() {
+        $('.ui.dropdown')
+            .dropdown('clear')
+        ;
+    });
+    function loaddata() {
+        $("#table-container").load(/*[[@{/admin/catinfos/search}]]*/"/admin/catinfos/search",{
+           name : $("[name='name']").val(),
+            typeId : $("[name='typeId']").val(),
+            page : $("[name='page']").val()
+        });
+    }
+</script>
+</body>
+</html>

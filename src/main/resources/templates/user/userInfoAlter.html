@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="user/_fragments ::head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改密码</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+
+<nav th:replace="user/_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted stackable menu">
+            <h2 class="ui teal header item">管理</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="bullhorn icon"></i>发布</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class="right m-item item m-mobile-hide m-mobile-hide">
+                <div class="ui dropdown item">
+                    <div class="text">用户</div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menuto black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<!-----中间登陆内容------>
+<div class="m-container-small m-padded-tb-large" style="max-width: 30em !important;">
+    <div class="ui container">
+        <div class="ui middle aligned center aligned grid">
+            <div class="column">
+                <h2 class="ui teal image header">
+                    <div class="content">
+                         修改账户信息
+                    </div>
+                </h2>
+                <form id="user-form" class="ui large form" method="post" action="#" th:action="@{/user/postEdit}" th:object="${user}">
+                    <input type="hidden" name="id" th:value="*{id}">
+                    <div class="ui stacked segment">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input type="text" name="password" th:value="*{password}"  placeholder="请输入密码">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input type="text" name="password01" placeholder="请再次输入密码">
+                            </div>
+                        </div>
+                        <button id="add-btm" type="button" class="ui fluid large teal submit button">确 认 修 改</button>
+                    </div>
+                    <div class="ui error message"></div>
+                    <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}">错误</div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="user/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <img src="./static/images/添加的图片名称.jpg" class="ui rounded image" alt="" style="width: 100%">
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-spaced">工具链接</h4>
+                <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">学校官网</a>
+                    <a href="#" class="item">知网</a>
+                    <a href="#" class="item">研招网</a>
+                </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header m-text-spaced">联系我</h4>
+                <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">邮箱：806426307@qq.com</a>
+                    <a href="#" class="item">QQ:806426307</a>
+                </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header m-text-spaced">网站简介</h4>
+                <p class="m-text-thin m-text-spaced m-text-lined">一个关注校园流浪猫猫虫的网站</p>
+            </div>
+        </div>
+        <div class=" ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced">Designed by GSC</p>
+    </div>
+</footer>
+<!----js部分------>
+<!--/*/<th:block th:replace="user/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+
+<!----输入判断------>
+<script>
+    $(document)
+        .ready(function() {
+            $('.ui.form')
+                .form({
+                    fields: {
+                        password: {
+                            identifier  : 'password',
+                            rules: [{
+                                type   : 'match[password01]',
+                                prompt : '两次密码必须相同'
+                            }]
+                        }
+                    }
+                });
+        });
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+    $('#add-btm').click(function () {
+        $('#user-form').submit();
+    })
+</script>
+</body>
+</html>

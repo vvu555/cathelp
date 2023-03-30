@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments ::head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分类管理</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+
+<!----------------------------导航----------------------------->
+<nav th:replace="admin/_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted stackable menu">
+            <h2 class="ui teal header item">管理</h2>
+               <a href="#" class="m-item item m-mobile-hide"><i class="bullhorn icon"></i>发布</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类管理</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class="right m-item item m-mobile-hide m-mobile-hide">
+                <div class="ui dropdown item">
+                   <div class="text">用户</div>
+                   <i class="dropdown icon"></i>
+                   <div class="menu">
+                      <a href="#" class="item">注销</a>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <a href="#" class="ui menuto black icon button m-right-top m-mobile-show">
+      <i class="sidebar icon"></i>
+  </a>
+</nav>
+
+<!---------------------------中间内容--------------------------->
+<div class="m-padded-tb-huge m-container-small">
+    <div class="ui container">
+        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">tips:</div>
+            <p th:text="${message}">成功</p>
+        </div>
+<!------------------中间内容------------------>
+    <table class="ui compact celled table">
+            <thead class="center aligned">
+            <tr>
+                <th>类型名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody class="center aligned">
+            <tr th:each="type,iterStat : ${page.content}">
+                <td th:text="${type.name}">James</td>
+                <td><a href="#" th:href="@{/admin/types/{id}/input(id=${type.id})}" class="ui mini basic blue button">编辑</a>
+                    <a href="#" th:href="@{/admin/types/{id}/delete(id=${type.id})}" class="ui mini basic red button">删除</a>
+                </td>
+            </tr>
+            </tbody>
+<!------------------分页内容------------------>
+            <tfoot>
+                  <tr>
+                     <th colspan="6">
+                        <div class="ui pagination menu" th:if="${page.totalPages}>1">
+                           <a class="icon item" th:href="@{/admin/types(page=${page.number}-1)}" th:unless="${page.first}">上一页</i></a>
+                           <a class="icon item" th:href="@{/admin/types(page=${page.number}+1)}" th:unless="${page.last}">下一页</i></a>
+                        </div>
+                         <a href="#" th:href="@{/admin/types/input}" class="ui right floated basic green basic button">新增</a>    <!--表格中往右靠边关键字"right floated"--->
+                     </th>
+                  </tr>
+            </tfoot>
+    </table>
+    </div>
+</div>
+
+
+<!----------------------------底部----------------------------->
+<footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <img src="./static/images/添加的图片名称.jpg" class="ui rounded image" alt="" style="width: 100%">
+            </div>
+            <div class="three wide column">
+               <h4 class="ui inverted header m-text-spaced">工具链接</h4>
+                  <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">学校官网</a>
+                    <a href="#" class="item">知网</a>
+                    <a href="#" class="item">研招网</a>
+                  </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header m-text-spaced">联系我</h4>
+                  <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">邮箱：806426307@qq.com</a>
+                    <a href="#" class="item">QQ:806426307</a>
+                  </div>
+            </div>
+            <div class="five wide column">
+                  <h4 class="ui inverted header m-text-spaced">网站简介</h4>
+                  <p class="m-text-thin m-text-spaced m-text-lined">一个关注校园流浪猫猫虫的网站</p>
+                  </div>
+            </div>
+        <div class=" ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced">Designed by GSC</p>
+    </div>
+</footer>
+
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+<script>$('.menuto').click(function () {
+    $('.m-item').toggleClass('m-mobile-hide');
+});
+    $('.ui.dropdown').dropdown();
+
+    $('.message .close')
+    .on('click', function () {
+        $(this)
+        .closest('.message')
+        .transition('fade');
+    });
+</script>
+</body>
+</html>

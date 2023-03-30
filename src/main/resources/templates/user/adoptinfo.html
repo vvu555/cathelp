@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head  th:replace="user/_fragments ::head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>申请</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/animate.css">
+    <link rel="stylesheet" href="../static/css/me.css">
+    <link rel="stylesheet" href="../static/css/typo.css">
+    <link rel="stylesheet" href=".static/js/scrollTo/jquery.scrollTo.min.js">
+</head>
+<body>
+
+<!----------------------------导航----------------------------->
+<nav th:replace="user/_fragments :: menu(6)" class="ui inverted attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted stackable menu">
+            <h2 class="ui teal header item">CatHelp</h2>
+               <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="clock icon"></i>时间戳</a>
+               <a href="#" class="m-item item m-mobile-hide">关于</a>
+                <div class="right m-item item m-mobile-hide">
+
+                </div>
+        </div>
+    </div>
+  <a href="#" class="ui menuto black icon button m-right-top m-mobile-show">
+      <i class="sidebar icon"></i>
+  </a>
+</nav>
+
+<!---------------------------中间内容--------------------------->
+<div class="m-padded-tb-huge m-container-small">
+    <div class="ui container">
+<!------------------头部------------------>
+        <div class="ui top attached segment">
+            <div class="ui horizontal link list">
+                <div class="ui teal ribbon label">
+                    <!--<img src="" class="ui avatar image" th:src="@{|/images/${cat.firstPicture}|}">-->
+                    <div class="content">
+                        <div class="header">
+                        <span th:text="${cat.name}">猫猫虫</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        <div class="ui attached segment">
+            <h4>性别：<span th:text="${cat.sex}">公</span></h4>
+            <h4>年龄：<span th:text="${cat.age}">1</span></h4>
+            <h4>接种情况：<span th:text="${cat.vaccineinfo}">未知</span></h4>
+            <div id="content" class="typo typo-selection m-padded-lr-responsive m-padded-tb" th:text="${cat.content}"></div>
+
+                <div class="ui secondary label" th:each="tag : ${cat.tags}" th:text="${tag.name}">标签</div>
+
+        </div>
+        <div  class="ui bottom attached segment">
+            <div class="content">
+                <br>
+                    <form action="#" id="adopt-form" th:action="@{/user/adoptPost}" method="post"  class="ui form">
+                        <input type="hidden" name="agree">
+                        <input type="hidden" name="money" value="0">
+                        <input type="hidden" name="cat.id" th:value="${cat.id}">
+                        <input type="hidden" name="applyState" value="0">
+                        <div class="ui container">
+                            <div class="ui middle aligend four column grid">
+
+                                <div class="column">
+                                    <div class="ui input">
+                                        <p>姓名<input name="realName" type="text" placeholder="请输入真实姓名"></p>
+
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="ui input">
+                                        <p>年龄<input name="age" type="text" placeholder="请输入年龄"></p>
+
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="ui input">
+                                        <p>身份证号<input name="cardId" type="text" placeholder="请输入身份证号"></p>
+
+                                    </div>
+                                </div>
+                                <div class="column">
+                            <div class="ui input">
+                                <p>电话号码<input name="tel" type="text" placeholder="请输入联系电话"></p>
+
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="ui input">
+                                <p>邮箱<input name="email" type="text" placeholder="请输入邮箱地址"></p>
+
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="ui left labeled input">
+                                <p>住址<input name="address" type="text" placeholder="请输入详细住址"></p>
+
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="ui left labeled input">
+                                <p>联系方式<input name="connection" type="text" placeholder="请输入QQ或微信号"></p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                        <br>
+                <div class="field">
+                    <label>自我介绍</label>
+                    <textarea name="selfIntroduction"></textarea>
+                </div>
+                <div class="ui right aligned container">
+                    <button type="button" id="send-btn"  class="ui green button">发送</button>
+                </div>
+                        <div class="ui error message"></div>
+                        <!----只有在有消息是才会显示的方法----->
+                        <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}">用户名或密码错误</div>
+            </form>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        收养申明
+    </div>
+    <div class="image content">
+        <div class="ui medium image">
+            <img class="ui medium rounded image" src="/images/wireframe/square-image.png" th:src="@{|/images/${cat.firstPicture}|}">
+        </div>
+        <div class="description">
+            <div class="ui header">请仔细阅读以下内容：</div>
+            <p>1.领养人必须年满18周岁，有正当职业者或经济能力(需带身份证)，未满18周岁者需由家长陪同，取得家长同意签字。</p>
+            <p>2.领养人在领养动物前有权要求管理员提供管理员当前已知的所领养动物的真实状况，并进行初步观察与接触。</p>
+            <p>3.领养人必须为领养动物提供适合的食物，提供洁净的饮用水，做到科学喂养。</p>
+            <p>4.领养人须在室内提供适当的活动空间，进行家庭喂养 ，并保证领养动物的安全。</p>
+            <p>5.领养人在必要时为领养动物提供必要的医疗措施，宠物若有生病，领养人须做到不离不弃，并带宠物及时去正规宠物医院接受治疗。</p>
+            <p>6.领养人接受领养后，协助管理员对喂养情况进行了解和回访(更换电话或者住址请第一时间通 知管理员)。</p>
+            <p>7.领养人须事先与家人做好沟通及商议，签署领养协议后，不得因为家人反对，婚姻，生育,工作变动，动物不听话，动物生病等原因抛弃领养动物，并且对领养宠物不离不弃，直至宠物自然老去。</p>
+            <p>8.领养人在无法继续喂养领养动物的情况下，必须将动物交回管理员，或与管理员共同为领养的动物找领养，未经管理员同意不得自行转交他人。</p>
+            <p>9.领养人带领养动物出门门]必须做好安全措施，如栓好牵引绳，不得遗失，逃走。</p>
+            <p>10.领养人在领养后不能再行转送，更不能将其转让或有对价抵押给第三方(不得出售或者贩卖转让)。</p>
+            <p>11.领养人不能怀有目的性带宠物配种。需适龄绝育。</p>
+            <p>12.领养人领养需想管理员支付100元保证金，后期定期随访三个月之后返还。</p>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            不同意
+        </div>
+        <div type="button" id="agree-btn" class="ui positive right labeled icon submit button">
+            同意
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
+
+<!----------------------------底部----------------------------->
+<footer th:replace="user/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <img src="./static/images/添加的图片名称.jpg" class="ui rounded image" alt="" style="width: 100%">
+            </div>
+            <div class="three wide column">
+               <h4 class="ui inverted header m-text-spaced">工具链接</h4>
+                  <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">学校官网</a>
+                    <a href="#" class="item">知网</a>
+                    <a href="#" class="item">研招网</a>
+                  </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header m-text-spaced">联系我</h4>
+                  <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">邮箱：806426307@qq.com</a>
+                    <a href="#" class="item">QQ:806426307</a>
+                  </div>
+            </div>
+            <div class="five wide column">
+                  <h4 class="ui inverted header m-text-spaced">网站简介</h4>
+                  <p class="m-text-thin m-text-spaced m-text-lined">一个关注校园流浪猫猫虫的网站</p>
+                  </div>
+            </div>
+        <div class=" ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced">Designed by GSC</p>
+    </div>
+</footer>
+
+<!--/*/<th:block th:replace="user/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="../static/js/scrollTo/jquery.scrollTo.min.js"></script>
+<!--/*/</th:block>/*/-->
+
+<script>
+    $('.menuto').click(function () {
+       $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.qr.button').popup({
+    popup : $('.qr-weixin.popup'),
+    on : 'click',
+    position : 'left center'
+    });
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+
+    $('#agree-btn').click(function () {
+        $('[name="agree"]').val(true);
+        $('#adopt-form').submit();
+    });
+    $('#send-btn').click(function () {
+        $('.ui.modal').modal('show');
+    });
+
+    $('.ui.form')
+        .form({
+            on : 'blur',
+            fields : {
+                realName:{
+                    indentifier : 'realName',
+                    rules:[
+                        {
+                            type: 'empty',
+                            prompt : '请输入真实名字'
+                        }
+                    ]
+                },
+                age: {
+                    indentifier  : 'age',
+                    rules: [
+                        {
+                            type   : 'empty',
+                            prompt : '请输入年龄'
+                        }
+                    ]
+                },
+                cardId:{
+                    indentifier : 'cardId',
+                    rules:[
+                        {
+                            type: 'empty',
+                            prompt : '请输入身份证号'
+                        }
+                    ]
+                },tel:{
+                    indentifier : 'tel',
+                    rules:[
+                        {
+                            type: 'empty',
+                            prompt : '请输入联系电话'
+                        }
+                    ]
+                },realName:{
+                    indentifier : 'realName',
+                    rules:[
+                        {
+                            type: 'empty',
+                            prompt : '请输入真实名字'
+                        }
+                    ]
+                },
+                email:{
+                    indentifier : 'email',
+                    rules:[
+                        {
+                            type: 'empty',
+                            prompt : '请输入邮箱地址'
+                        }
+                    ]
+                },
+                address:{
+                    indentifier : 'address',
+                    rules:[
+                        {
+                            type: 'empty',
+                            prompt : '请输入详细住址'
+                        }
+                    ]
+                },
+                selfIntroduction:{
+                    indentifier : 'selfIntroduction',
+                    rules:[
+                        {
+                            type: 'empty',
+                            prompt : '请输入自我介绍'
+                        }
+                    ]
+                }
+            }
+        });
+</script>
+</body>
+</html>

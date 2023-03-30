@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head  th:replace="user/_fragments ::head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流浪猫信息</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/animate.css">
+    <link rel="stylesheet" href="../static/css/me.css">
+    <link rel="stylesheet" href="../static/css/typo.css">
+    <link rel="stylesheet" href=".static/js/scrollTo/jquery.scrollTo.min.js">
+</head>
+<body>
+
+<!----------------------------导航----------------------------->
+<nav th:replace="user/_fragments :: menu(6)" class="ui inverted attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted stackable menu">
+            <h2 class="ui teal header item">CatHelp</h2>
+               <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+               <a href="#" class="m-item item m-mobile-hide"><i class="clock icon"></i>时间戳</a>
+               <a href="#" class="m-item item m-mobile-hide">关于</a>
+                <div class="right m-item item m-mobile-hide">
+
+                </div>
+        </div>
+    </div>
+  <a href="#" class="ui menuto black icon button m-right-top m-mobile-show">
+      <i class="sidebar icon"></i>
+  </a>
+</nav>
+
+<!---------------------------中间内容--------------------------->
+<div class="m-padded-tb-huge m-container-small">
+    <div class="ui container">
+<!------------------头部------------------>
+        <div class="ui top attached segment">
+            <div class="ui horizontal link list">
+                <div class="item">
+                    <div class="content">
+                            <h2 class="ui teal ribbon label"><span th:text="${userCat.name}">猫猫虫</span></h2>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="content">
+                        <i class="calendar icon"></i>
+                        <span th:text="${#dates.format(userCat.updateTime,'yyyy-MM-dd')}">
+                       2022-03-06
+                    </span>
+                    </div>
+
+                </div>
+                <div class="item">
+                    <div class="content">
+                        <i class="eye icon"></i>
+                        <span th:text="${userCat.views}">
+                        0
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!------------------图片------------------>
+        <div class="ui bottom attached segment">
+            <div class="ui middle aligend two column grid">
+                <div class="ui middle aligend column">
+                    <img src="../static/images" th:src="@{|/images/${userCat.firstPicture}|}" class="ui rounded fluid image" style="width: 70%">
+                </div>
+
+                <div class="column">
+                    <h5>性别：<span th:text="${userCat.sex}">公</span></h5>
+                    <h5>年龄：<span th:text="${userCat.age}">1</span></h5>
+                    <h5>接种情况：<span th:text="${userCat.vaccineinfo}">未知</span></h5>
+                    <br>
+                    <h5>描述：<div id="content" class="typo typo-selection m-padded-lr-responsive m-padded-tb" th:text="${userCat.content}"></div></h5>
+
+                    <div class="m-padded-lr-responsive">
+                        <div class="ui secondary label" th:each="tag : ${userCat.tags}" th:text="${tag.name}">标签</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---------------右下小工具--------------->
+<div class="m-padded m-fixed m-right-bottom">
+<div class="ui vertical icon buttons">
+    <a href="#comment-container" class="ui blue button">留言</a>
+    <button type="button" class="ui qr green button"><i class="weixin icon"></i> </button>
+    <div id="toTop" class="ui button"><i class="chevron up icon"></i></div>
+</div>
+</div>
+
+<div class="ui qr-weixin flowing popup transition hidden m-padded-tb-mini" style="width: 130px !important;">
+    <img src="../static/images/weixin.jpg" th:src="@{/images/weixin.jpg}" class="ui rounded image" style="width: 120px !important;">
+</div>
+<!----------------------------底部----------------------------->
+<footer th:replace="user/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <img src="./static/images/添加的图片名称.jpg" class="ui rounded image" alt="" style="width: 100%">
+            </div>
+            <div class="three wide column">
+               <h4 class="ui inverted header m-text-spaced">工具链接</h4>
+                  <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">学校官网</a>
+                    <a href="#" class="item">知网</a>
+                    <a href="#" class="item">研招网</a>
+                  </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header m-text-spaced">联系我</h4>
+                  <div class="ui inverted link list m-text-thin m-text-spaced">
+                    <a href="#" class="item">邮箱：806426307@qq.com</a>
+                    <a href="#" class="item">QQ:806426307</a>
+                  </div>
+            </div>
+            <div class="five wide column">
+                  <h4 class="ui inverted header m-text-spaced">网站简介</h4>
+                  <p class="m-text-thin m-text-spaced m-text-lined">一个关注校园流浪猫猫虫的网站</p>
+                  </div>
+            </div>
+        <div class=" ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced">Designed by GSC</p>
+    </div>
+</footer>
+
+<!--/*/<th:block th:replace="user/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="../static/js/scrollTo/jquery.scrollTo.min.js"></script>
+<!--/*/</th:block>/*/-->
+
+<script>
+    $('.menuto').click(function () {
+       $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.qr.button').popup({
+    popup : $('.qr-weixin.popup'),
+    on : 'click',
+    position : 'left center'
+    });
+    $('#toTop').click(function () {
+        $(window).scrollTo(0,500);
+    });
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+</script>
+</body>
+</html>
